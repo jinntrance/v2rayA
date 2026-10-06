@@ -38,6 +38,12 @@ export const defaultForm = () => ({
   routeOnly: false,
   muxOn: "no",
   mux: 8,
+  dnsCacheEnabled: true,
+  dnsPrefetch: true,
+  dnsNegativeCache: true,
+  dnsCacheSize: 4096,
+  dnsCacheMinTTL: 60,
+  dnsCacheMaxTTL: 86400,
 });
 export type SettingForm = ReturnType<typeof defaultForm>;
 
@@ -50,6 +56,9 @@ export function toRequest(form: SettingForm): Setting {
       String(form.subscriptionAutoUpdateIntervalHour),
     ),
     mux: parseInt(String(form.mux)),
+    dnsCacheSize: Number(form.dnsCacheSize),
+    dnsCacheMinTTL: Number(form.dnsCacheMinTTL),
+    dnsCacheMaxTTL: Number(form.dnsCacheMaxTTL),
   } as Setting;
 }
 

@@ -43,3 +43,5 @@ Known limitation: on Windows and macOS an application that queries a LAN resolve
 ## Sharing with the LAN
 
 **Port Sharing** makes the SOCKS, HTTP and custom inbounds listen on all interfaces instead of `127.0.0.1`, so other devices can use this machine as their proxy; the API port stays on loopback. To route their traffic through the transparent proxy as well, use `redirect`, `tproxy` or `tun`, turn on **IP Forward**, keep the interface they arrive on out of the excluded prefixes, and point their default gateway at this machine; the system proxy modes cannot do this.
+
+Under **Settings → DNS Settings**, the cache switch, prefetch and negative-answer cache are saved with **Save and Apply**. Cache size counts entries; minimum and maximum TTL are in seconds and must be positive integers, with maximum TTL at least minimum TTL. Changing only the switches keeps the loaded size and TTL values. These options apply to queries handled by the core DNS module.

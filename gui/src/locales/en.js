@@ -289,6 +289,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "DNS cache",
+    cachePrefetch: "Prefetch cached records",
+    cacheNegative: "Cache negative answers",
+    cacheSize: "Cache size (entries)",
+    cacheMinTTL: "Minimum TTL (seconds)",
+    cacheMaxTTL: "Maximum TTL (seconds)",
+    cachePositiveInteger: "Enter a positive whole number",
+    cacheTTLOrder: "Maximum TTL must be at least the minimum TTL",
+
     title: "DNS Settings",
     colServer: "DNS Server",
     colDomains: "Domain List",

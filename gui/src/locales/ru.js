@@ -289,6 +289,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "Кэш DNS",
+    cachePrefetch: "Предварительное обновление записей",
+    cacheNegative: "Кэшировать отрицательные ответы",
+    cacheSize: "Размер кэша (записей)",
+    cacheMinTTL: "Минимальный TTL (секунды)",
+    cacheMaxTTL: "Максимальный TTL (секунды)",
+    cachePositiveInteger: "Введите положительное целое число",
+    cacheTTLOrder: "Максимальный TTL должен быть не меньше минимального",
+
     title: "Настройки DNS",
     colServer: "DNS-сервер",
     colDomains: "Список доменов",

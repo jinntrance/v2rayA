@@ -165,6 +165,12 @@ const localVersionDisplay = computed(() => {
 const positive = (v: unknown) =>
   Number(v) >= 1 || t("configureServer.required");
 
+const cacheInteger = (v: unknown) =>
+  (Number.isSafeInteger(Number(v)) && Number(v) >= 1) ||
+  t("dns.cachePositiveInteger");
+const cacheMaxTTL = (v: unknown) =>
+  Number(v) >= Number(form.dnsCacheMinTTL) || t("dns.cacheTTLOrder");
+
 // ---- the dialogs -----------------------------------------------------------------
 
 async function openGfwList() {
@@ -420,6 +426,78 @@ defineExpose({ sync: () => settings.load() });
         </v-expand-transition>
       </v-list>
 
+      <v-list class="mb-4" bg-color="surface-container-low" rounded="xl">
+        <v-list-subheader>
+          {{ t("dns.title") }}
+          <DocsLink section="transparent-proxy" />
+        </v-list-subheader>
+        <SettingRow
+          :title="t('dns.colServer')"
+          :subtitle="t('operations.configure')"
+          action
+          @click="openDns"
+        />
+        <SettingRow :title="t('dns.cacheEnabled')">
+          <v-switch
+            v-model="form.dnsCacheEnabled"
+            :aria-label="t('dns.cacheEnabled')"
+            hide-details
+          />
+        </SettingRow>
+        <SettingRow :title="t('dns.cachePrefetch')">
+          <v-switch
+            v-model="form.dnsPrefetch"
+            :aria-label="t('dns.cachePrefetch')"
+            :disabled="!form.dnsCacheEnabled"
+            hide-details
+          />
+        </SettingRow>
+        <SettingRow :title="t('dns.cacheNegative')">
+          <v-switch
+            v-model="form.dnsNegativeCache"
+            :aria-label="t('dns.cacheNegative')"
+            :disabled="!form.dnsCacheEnabled"
+            hide-details
+          />
+        </SettingRow>
+        <SettingRow :title="t('dns.cacheSize')">
+          <v-text-field
+            v-model="form.dnsCacheSize"
+            class="settings__number"
+            type="number"
+            min="1"
+            step="1"
+            :rules="[cacheInteger]"
+            :aria-label="t('dns.cacheSize')"
+            hide-details="auto"
+          />
+        </SettingRow>
+        <SettingRow :title="t('dns.cacheMinTTL')">
+          <v-text-field
+            v-model="form.dnsCacheMinTTL"
+            class="settings__number"
+            type="number"
+            min="1"
+            step="1"
+            :rules="[cacheInteger]"
+            :aria-label="t('dns.cacheMinTTL')"
+            hide-details="auto"
+          />
+        </SettingRow>
+        <SettingRow :title="t('dns.cacheMaxTTL')">
+          <v-text-field
+            v-model="form.dnsCacheMaxTTL"
+            class="settings__number"
+            type="number"
+            min="1"
+            step="1"
+            :rules="[cacheInteger, cacheMaxTTL]"
+            :aria-label="t('dns.cacheMaxTTL')"
+            hide-details="auto"
+          />
+        </SettingRow>
+      </v-list>
+
       <v-list bg-color="surface-container-low" rounded="xl">
         <v-list-subheader>{{ t("setting.sections.more") }}</v-list-subheader>
         <SettingRow
@@ -433,12 +511,6 @@ defineExpose({ sync: () => settings.load() });
           :hint="t('customInbound.hint')"
           action
           @click="openInbounds"
-        />
-        <SettingRow
-          :title="t('dns.title')"
-          :subtitle="t('dns.colServer')"
-          action
-          @click="openDns"
         />
         <SettingRow
           :title="t('common.about')"

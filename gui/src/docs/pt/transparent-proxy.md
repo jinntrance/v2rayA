@@ -43,3 +43,5 @@ Limitação conhecida: no Windows e no macOS, um aplicativo que consulta diretam
 ## Compartilhamento com a rede local
 
 **Compartilhamento de portas** faz as entradas SOCKS, HTTP e personalizadas escutarem em todas as interfaces em vez de `127.0.0.1`, para que outros dispositivos possam usar esta máquina como proxy; a porta da API permanece no loopback. Para rotear o tráfego desses dispositivos também pelo proxy transparente, use `redirect`, `tproxy` ou `tun`, ative **Encaminhamento de IP**, mantenha a interface pela qual o tráfego chega fora dos prefixos excluídos e direcione o gateway padrão dos dispositivos para esta máquina; os modos de proxy do sistema não podem fazer isso.
+
+Em **Configurações → Configurações DNS**, os controles de cache, pré-carregamento e respostas negativas são persistidos com **Salvar e aplicar**. O tamanho conta entradas; os TTLs mínimo e máximo são inteiros positivos em segundos, com o máximo maior ou igual ao mínimo. Alterar somente os controles mantém o tamanho e os TTLs carregados. Estas opções se aplicam às consultas processadas pelo módulo DNS do núcleo.

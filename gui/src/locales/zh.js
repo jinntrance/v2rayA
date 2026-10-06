@@ -281,6 +281,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "DNS 缓存",
+    cachePrefetch: "预取缓存记录",
+    cacheNegative: "缓存负响应",
+    cacheSize: "缓存大小（条目）",
+    cacheMinTTL: "最小 TTL（秒）",
+    cacheMaxTTL: "最大 TTL（秒）",
+    cachePositiveInteger: "请输入正整数",
+    cacheTTLOrder: "最大 TTL 不得小于最小 TTL",
+
     title: "DNS 设置",
     colServer: "DNS 服务器",
     colDomains: "域名列表",

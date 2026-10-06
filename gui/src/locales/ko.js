@@ -286,6 +286,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "DNS 캐시",
+    cachePrefetch: "캐시 레코드 미리 가져오기",
+    cacheNegative: "부정 응답 캐시",
+    cacheSize: "캐시 크기 (항목)",
+    cacheMinTTL: "최소 TTL (초)",
+    cacheMaxTTL: "최대 TTL (초)",
+    cachePositiveInteger: "양의 정수를 입력하세요",
+    cacheTTLOrder: "최대 TTL은 최소 TTL 이상이어야 합니다",
+
     title: "DNS 설정",
     colServer: "DNS 서버",
     colDomains: "도메인 목록",

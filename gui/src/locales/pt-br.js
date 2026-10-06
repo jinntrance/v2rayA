@@ -293,6 +293,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "Cache DNS",
+    cachePrefetch: "Pré-carregar registros em cache",
+    cacheNegative: "Armazenar respostas negativas",
+    cacheSize: "Tamanho do cache (entradas)",
+    cacheMinTTL: "TTL mínimo (segundos)",
+    cacheMaxTTL: "TTL máximo (segundos)",
+    cachePositiveInteger: "Insira um número inteiro positivo",
+    cacheTTLOrder: "O TTL máximo deve ser maior ou igual ao TTL mínimo",
+
     title: "Configurações de DNS",
     colServer: "Servidor DNS",
     colDomains: "Lista de domínios",

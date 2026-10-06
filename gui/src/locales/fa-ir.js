@@ -287,6 +287,15 @@ export default {
     ],
   },
   dns: {
+    cacheEnabled: "حافظهٔ نهان DNS",
+    cachePrefetch: "پیش‌واکشی رکوردهای ذخیره‌شده",
+    cacheNegative: "ذخیرهٔ پاسخ‌های منفی",
+    cacheSize: "اندازهٔ حافظهٔ نهان (رکورد)",
+    cacheMinTTL: "حداقل TTL (ثانیه)",
+    cacheMaxTTL: "حداکثر TTL (ثانیه)",
+    cachePositiveInteger: "یک عدد صحیح مثبت وارد کنید",
+    cacheTTLOrder: "حداکثر TTL باید بزرگ‌تر یا مساوی حداقل TTL باشد",
+
     title: "تنظیمات DNS",
     colServer: "سرور DNS",
     colDomains: "فهرست دامنه‌ها",

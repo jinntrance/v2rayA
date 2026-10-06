@@ -41,6 +41,12 @@ const loaded: Setting = {
   routeOnly: true,
   muxOn: "yes",
   mux: 8,
+  dnsCacheEnabled: false,
+  dnsPrefetch: false,
+  dnsNegativeCache: false,
+  dnsCacheSize: 8192,
+  dnsCacheMinTTL: 120,
+  dnsCacheMaxTTL: 7200,
 };
 
 let wrapper: VueWrapper;
@@ -146,6 +152,83 @@ describe("settings list", () => {
     await wrapper.get('button[type="submit"]').trigger("click");
     await flushPromises();
     expect(putSetting).toHaveBeenCalledOnce();
+  });
+
+  test("enables all cache switches without changing loaded size or TTL", async () => {
+    await mountPage();
+    expect(wrapper.get('input[aria-label="DNS cache"]').element).toHaveProperty(
+      "checked",
+      false,
+    );
+    expect(
+      wrapper
+        .get('input[aria-label="Prefetch cached records"]')
+        .attributes("disabled"),
+    ).toBeDefined();
+    await toggle("DNS cache", true);
+    await toggle("Prefetch cached records", true);
+    await toggle("Cache negative answers", true);
+    await wrapper.get('button[type="submit"]').trigger("click");
+    await flushPromises();
+    expect(putSetting).toHaveBeenCalledExactlyOnceWith(
+      {
+        ...loaded,
+        dnsCacheEnabled: true,
+        dnsPrefetch: true,
+        dnsNegativeCache: true,
+      },
+      { signal: expect.any(AbortSignal) },
+    );
+  });
+
+  test("saves integer cache values and preserves prefetch preferences when disabled", async () => {
+    vi.mocked(getSetting).mockResolvedValue({
+      setting: {
+        ...loaded,
+        dnsCacheEnabled: true,
+        dnsPrefetch: true,
+        dnsNegativeCache: true,
+      },
+      localGFWListVersion: "",
+      localGeositeVersion: "",
+    });
+    await mountPage();
+    await wrapper
+      .get('input[aria-label="Cache size (entries)"]')
+      .setValue("2048");
+    await wrapper
+      .get('input[aria-label="Minimum TTL (seconds)"]')
+      .setValue("30");
+    await wrapper
+      .get('input[aria-label="Maximum TTL (seconds)"]')
+      .setValue("3600");
+    await toggle("DNS cache", false);
+    await wrapper.get('button[type="submit"]').trigger("click");
+    await flushPromises();
+    expect(putSetting).toHaveBeenCalledExactlyOnceWith(
+      {
+        ...loaded,
+        dnsPrefetch: true,
+        dnsNegativeCache: true,
+        dnsCacheSize: 2048,
+        dnsCacheMinTTL: 30,
+        dnsCacheMaxTTL: 3600,
+      },
+      { signal: expect.any(AbortSignal) },
+    );
+  });
+
+  test.each([
+    ["Cache size (entries)", "0"],
+    ["Cache size (entries)", "1.5"],
+    ["Minimum TTL (seconds)", "-1"],
+    ["Maximum TTL (seconds)", "60"],
+  ])("rejects invalid cache input %s=%s", async (label, value) => {
+    await mountPage();
+    await wrapper.get(`input[aria-label="${label}"]`).setValue(value);
+    await wrapper.get('button[type="submit"]').trigger("click");
+    await flushPromises();
+    expect(putSetting).not.toHaveBeenCalled();
   });
 
   test("opens the existing About content as a dismissible dialog", async () => {
