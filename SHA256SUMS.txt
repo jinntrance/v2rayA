@@ -1,0 +1,3 @@
+ea0c0b355288445b62d4f20026253a772a60c6e1794f2bc70384c6d7f04fb4d1  v2raya-dns-cache-macos-amd64-987bd003.zip
+eb907dd8a7f78beebddfcf4c289a50890ae442d7ee2d600b2b07cb707bb8034a  v2raya-dns-cache-macos-arm64-987bd003.zip
+ce6d5477dcf7afea3b511d0026f2eea99d7a169c7628305519c837fe9c84768b  v2raya-source-987bd003.zip
